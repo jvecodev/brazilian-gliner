@@ -31,7 +31,7 @@
 
 ---
 
-## 🎯 Por que este projeto existe
+##🎯 Por que este projeto existe
 
 Modelos abertos de detecção de PII, como o
 [`fastino/gliner2-privacy-filter-PII-multi`](https://huggingface.co/fastino/gliner2-privacy-filter-PII-multi),
@@ -46,7 +46,7 @@ O `brgliner` ataca essa lacuna: um detector **especializado na burocracia brasil
 contra um conjunto de teste **revisado à mão**, e honesto sobre quando o modelo realmente agrega
 valor em relação a uma regex bem feita.
 
-## 🧭 Objetivos e escopo
+##  Objetivos e escopo
 
 **Objetivo principal:** aprender, de ponta a ponta, o processo de construir um modelo de NER
 (ideia → arquitetura → dados → treino → avaliação → publicação) e terminar com um artefato
@@ -59,7 +59,7 @@ público e útil.
 | **Idioma** | Português do Brasil | Outros idiomas (aceitamos perda de desempenho neles) |
 | **Entrega** | Modelo, dataset, pacote PyPI e demo no HF Space | API REST, Docker, deploy em produção |
 
-## 🏷️ Entidades da v1
+##  Entidades da v1
 
 Os rótulos ficam em sigla ou em inglês (o GLiNER usa o *nome* do rótulo como sinal semântico, e o
 backbone é multilíngue).
@@ -100,7 +100,7 @@ CRM/CREA/CRP, chassi e filiação (como relação).
 > dígito verificador errado (erro de digitação) continua sendo dado sensível e deve ser
 > detectado. A camada de regex apenas anexa o metadado `checksum_valid`.
 
-## 🏗️ Arquitetura
+##  Arquitetura
 
 O detector é **híbrido**: regex + checksum para o que tem formato fixo e um modelo GLiNER2 para o
 que depende de contexto (números sem formatação, "esse número é RG ou CNH?", nomes, endereços).
@@ -148,7 +148,7 @@ spans = detector.detect("Eu, Maria Souza, CPF 123.456.789-09, residente na Rua d
 Anonymizer(strategy="mask").apply(text, spans)
 ```
 
-## 🧪 Pipeline de dados sintéticos
+##  Pipeline de dados sintéticos
 
 **Nenhum dado pessoal real entra no projeto.** Todo o treino é sintético, e o LLM **nunca** inventa
 os valores sensíveis: ele escreve o texto com *placeholders*, e os nossos geradores preenchem com
@@ -206,7 +206,7 @@ decore nomes em vez de aprender o contexto.
 **Reprodutibilidade:** os dados não vão para o git (`data/` é ignorado). Todo dataset é
 regenerável por script com **seed fixa** e é versionado quando publicado no HF Datasets.
 
-## 🏋️ Treino
+##  Treino
 
 | Item | Decisão |
 |---|---|
@@ -228,7 +228,7 @@ flowchart LR
     MERGE --> HUB["HF Hub<br/>modelo + adapter"]
 ```
 
-## 📏 Avaliação
+##  Avaliação
 
 **Métrica:** precisão, recall e F1 por span (*exact match*), **por rótulo**.
 
@@ -255,7 +255,7 @@ mascara texto a mais.
 - todos revisados e corrigidos no **Label Studio**;
 - montado **antes** do treino, para não enviesar.
 
-## 🖥️ Infraestrutura e ambiente
+##  Infraestrutura e ambiente
 
 | Componente | Escolha |
 |---|---|
@@ -266,7 +266,7 @@ mascara texto a mais.
 | Anotação | **Label Studio** via Docker |
 | Experimentos | **Weights & Biases** |
 
-> ⚠️ Com 8 GB de VRAM, **geração (Ollama) e treino não rodam ao mesmo tempo**: são fases
+>  Com 8 GB de VRAM, **geração (Ollama) e treino não rodam ao mesmo tempo**: são fases
 > separadas do pipeline.
 
 ### Setup (rascunho — será detalhado na fase 0)
@@ -290,7 +290,7 @@ uv run wandb login
 docker run -it -p 8080:8080 -v $(pwd)/data/labelstudio:/label-studio/data heartexlabs/label-studio:latest
 ```
 
-## 📁 Estrutura do repositório
+##  Estrutura do repositório
 
 ```
 brazilian-gliner/
@@ -323,7 +323,7 @@ brazilian-gliner/
 | `pip install brgliner[data]` | + geração de dados (Faker, cliente Ollama) |
 | `pip install brgliner[train]` | + treino (LoRA, W&B) |
 
-## ✅ Qualidade, CI e releases
+##  Qualidade, CI e releases
 
 - **Lint e formatação:** `ruff` (rodado no editor ou com `uv run ruff check --fix`). **Sem
   pre-commit.**
@@ -389,7 +389,7 @@ git push origin v0.1.0   # dispara o release.yml → pacote no PyPI
 > publisher*, informar o repositório `jvecodev/brazilian-gliner`, o workflow `release.yml` e o
 > environment `pypi`.
 
-## 🔒 Privacidade e LGPD
+##  Privacidade e LGPD
 
 - **Nenhum dado pessoal real** é coletado, versionado ou publicado. Todos os valores sensíveis são
   gerados sinteticamente (CPFs/CNPJs com DV válido não correspondem intencionalmente a ninguém).
@@ -402,7 +402,7 @@ git push origin v0.1.0   # dispara o release.yml → pacote no PyPI
 - O `brgliner` é uma **ferramenta de apoio**: nenhum detector tem recall de 100%. Em uso real,
   combine-o com revisão humana.
 
-## 🗺️ Roadmap
+##  Roadmap
 
 - [ ] **Fase 0 — Setup:** uv, Python 3.12, PyTorch + CUDA, Ollama, W&B, CI (`ci.yml`)
 - [ ] **Fase 1 — Validadores e regex:** DV de todos os IDs, detectores por formato → **baseline 1**
@@ -414,7 +414,7 @@ git push origin v0.1.0   # dispara o release.yml → pacote no PyPI
 - [ ] **Fase 7 — Pacote:** fusão + anonimizador + API pública do `brgliner`
 - [ ] **Fase 8 — Publicação:** modelo (mesclado + adapter) e dataset no HF, release no PyPI (`release.yml`), demo Gradio no HF Space
 
-## 📝 Registro de decisões
+##  Registro de decisões
 
 | # | Decisão | Motivo |
 |---|---|---|
@@ -441,7 +441,7 @@ git push origin v0.1.0   # dispara o release.yml → pacote no PyPI
 
 Decisões futuras serão registradas como ADRs em `docs/adr/`.
 
-## 📚 Referências
+##  Referências
 
 - [fastino/gliner2-privacy-filter-PII-multi](https://huggingface.co/fastino/gliner2-privacy-filter-PII-multi) — modelo de inspiração e checkpoint base
 - [fastino-ai/GLiNER2](https://github.com/fastino-ai/GLiNER2) — biblioteca, formato de dados e trainer
