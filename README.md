@@ -8,7 +8,7 @@
 > Hugging Face, a `pip install brgliner` package and a Gradio demo. No real personal data is
 > ever used.
 
-> 🚧 **Status:** em construção — fase 0 (setup). Veja o [roadmap](#-roadmap).
+> **Status:** em construção — fase 0 (setup). Veja o [roadmap](#-roadmap).
 
 ---
 
@@ -31,7 +31,7 @@
 
 ---
 
-##🎯 Por que este projeto existe
+## Por que este projeto existe
 
 Modelos abertos de detecção de PII, como o
 [`fastino/gliner2-privacy-filter-PII-multi`](https://huggingface.co/fastino/gliner2-privacy-filter-PII-multi),
